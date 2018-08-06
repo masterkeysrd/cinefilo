@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -18,6 +19,12 @@ import java.util.Date;
                 @NamedQuery(name = "Show.getByMovie",
                         query = "select t from Show t " +
                                 "where t.movie.id = :prm_movie"),
+                @NamedQuery(name = "Show.getByMovieAndCinema",
+                            query = "select s from Show s " +
+                                    "where s.room.cinema.id = :prm_cinema " +
+                                    "and s.movie.id = :prm_movie " +
+                                    "and s.datefrom <= :prm_date " +
+                                    "and s.dateto >= :prm_date"),
                 @NamedQuery(name = "Show.getByRoomAndMovie",
                         query = "select t from Show t " +
                                 "where t.room.id = :prm_room " +
@@ -52,6 +59,8 @@ public class Show implements Serializable {
     @JsonFormat(pattern = "k:mm")
     private LocalTime startHour;
 
+    @Column(name = "COSTO")
+    private BigDecimal cost;
 
     public Integer getId() {
         return id;
@@ -99,5 +108,13 @@ public class Show implements Serializable {
 
     public void setStartHour(LocalTime startHour) {
         this.startHour = startHour;
+    }
+
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
     }
 }

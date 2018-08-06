@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -30,21 +31,30 @@ public class ShowService implements ShowRepository {
     }
 
     public List<Show> getByMovie(Integer movie) {
-        Query query = entityManager.createNamedQuery("Show.getByMovie");
+        Query query = entityManager.createNamedQuery("Show.getByMovie", Show.class);
         query.setParameter("prm_movie", movie);
         return query.getResultList();
     }
 
     public List<Show> getByRoom(Integer room) {
-        Query query = entityManager.createNamedQuery("Show.getByRoom");
+        Query query = entityManager.createNamedQuery("Show.getByRoom", Show.class);
         query.setParameter("prm_room", room);
         return query.getResultList();
     }
 
     public List<Show> getByRoomAndMovie(Integer room, Integer movie) {
-        Query query = entityManager.createNamedQuery("Show.getByRoomAndMovie");
+        Query query = entityManager.createNamedQuery("Show.getByRoomAndMovie", Show.class);
         query.setParameter("prm_room", room);
         query.setParameter("prm_movie", movie);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Show> getByMovieAndCinema(Integer movie, Integer cinema, Date date) {
+        Query query = entityManager.createNamedQuery("Show.getByMovieAndCinema", Show.class);
+        query.setParameter("prm_movie", movie);
+        query.setParameter("prm_cinema", cinema);
+        query.setParameter("prm_date", date);
         return query.getResultList();
     }
 
