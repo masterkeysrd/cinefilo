@@ -11,7 +11,17 @@ import java.util.Date;
                 @NamedQuery(name = "Movie.getAll",
                         query = "select t from Movie t"),
                 @NamedQuery(name = "Movie.getByTitle",
-                        query = "select t from Movie t where t.name like concat('%', :prm_name, '%')")
+                        query = "select t from Movie t where t.name like concat('%', :prm_name, '%')"),
+                @NamedQuery(name = "Movie.getPremieres",
+                        query = "select t " +
+                                "from Movie t " +
+                                "where t.premiereDate > :prm_date"),
+                @NamedQuery(name = "Movie.getBillboard",
+                        query = "select distinct t " +
+                                "from Movie t " +
+                                "join Show s on (s.movie.id = t.id) " +
+                                "where s.datefrom <= current_date " +
+                                "and s.dateto >= current_date ")
         }
 )
 public class Movie implements Serializable {

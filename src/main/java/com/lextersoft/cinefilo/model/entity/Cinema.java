@@ -12,7 +12,14 @@ import java.io.Serializable;
                 @NamedQuery(name = "Cinema.getAll",
                         query = "select t from Cinema t"),
                 @NamedQuery(name = "Cinema.getByName",
-                        query = "select t from Cinema t where t.name like concat('%', :prm_name, '%')")
+                        query = "select t from Cinema t where t.name like concat('%', :prm_name, '%')"),
+                @NamedQuery(name = "Cinema.getWithShows",
+                        query = "select t " +
+                                "from Cinema t " +
+                                "join Room r on r.cinema.id = t.id " +
+                                "join Show s on s.room.id = r.id " +
+                                "where :prm_date between s.datefrom and s.dateto " +
+                                "and s.movie.id = :prm_movie")
         }
 )
 public class Cinema implements Serializable {

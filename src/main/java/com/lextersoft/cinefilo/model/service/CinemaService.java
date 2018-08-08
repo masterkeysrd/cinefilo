@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -35,6 +36,16 @@ public class CinemaService implements CinemaRepository {
         Query query = entityManager
                 .createNamedQuery("Cinema.getByName", Cinema.class);
         query.setParameter("prm_name", name.replace(" ", "%"));
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Cinema> getWithShows(Integer movie, Date date) {
+        Query query = entityManager
+                .createNamedQuery("Cinema.getWithShows", Cinema.class);
+        query.setParameter("prm_movie", movie);
+        query.setParameter("prm_date", date);
 
         return query.getResultList();
     }

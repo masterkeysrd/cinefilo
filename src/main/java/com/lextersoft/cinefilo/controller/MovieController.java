@@ -22,6 +22,16 @@ public class MovieController implements IBasicController<Movie, Integer> {
             return movieRepository.getByName(search.replace(" ", "%"));
     }
 
+    @GetMapping("/premieres")
+    public List<Movie> getPremieres () {
+        return movieRepository.getPremieres();
+    }
+
+    @GetMapping("/billboard")
+    public List<Movie> getBillboard () {
+        return movieRepository.getBillboard();
+    }
+
     @GetMapping("/{id}")
     public Movie findById(@PathVariable(name = "id") Integer id) {
         return movieRepository.findById(id);

@@ -5,6 +5,9 @@ import com.lextersoft.cinefilo.model.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -22,6 +25,11 @@ public class CinemaController implements IBasicController<Cinema, Integer> {
         else {
             return cinemaRepository.getByName(search);
         }
+    }
+
+    @GetMapping("/shows")
+    public List<Cinema> getWithShows(@RequestParam(name = "movie") Integer movie, @RequestParam(name = "date") String date) throws ParseException {
+        return cinemaRepository.getWithShows(movie, new SimpleDateFormat("dd-MM-yyyy").parse(date));
     }
 
     @GetMapping("/{id}")
