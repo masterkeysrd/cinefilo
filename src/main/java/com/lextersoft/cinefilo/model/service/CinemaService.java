@@ -33,21 +33,19 @@ public class CinemaService implements CinemaRepository {
 
     @Override
     public List<Cinema> getByName(String name) {
-        Query query = entityManager
-                .createNamedQuery("Cinema.getByName", Cinema.class);
-        query.setParameter("prm_name", name.replace(" ", "%"));
-
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Cinema.getByName", Cinema.class)
+                .setParameter("prm_name", name.replace(" ", "%"))
+                .getResultList();
     }
 
     @Override
     public List<Cinema> getWithShows(Integer movie, Date date) {
-        Query query = entityManager
-                .createNamedQuery("Cinema.getWithShows", Cinema.class);
-        query.setParameter("prm_movie", movie);
-        query.setParameter("prm_date", date);
-
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Cinema.getWithShows", Cinema.class)
+                .setParameter("prm_movie", movie)
+                .setParameter("prm_date", date)
+                .getResultList();
     }
 
     @Override

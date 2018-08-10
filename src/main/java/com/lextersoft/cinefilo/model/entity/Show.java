@@ -28,7 +28,12 @@ import java.util.Date;
                 @NamedQuery(name = "Show.getByRoomAndMovie",
                         query = "select t from Show t " +
                                 "where t.room.id = :prm_room " +
-                                "and t.movie.id = :prm_movie")
+                                "and t.movie.id = :prm_movie"),
+                @NamedQuery(name = "Show.getByCinema",
+                        query = "select t from Show t " +
+                                "where t.room.cinema.id = :prm_cinema " +
+                                "and t.datefrom >= current_date " +
+                                "and t.dateto <= current_date ")
         }
 )
 public class Show implements Serializable {

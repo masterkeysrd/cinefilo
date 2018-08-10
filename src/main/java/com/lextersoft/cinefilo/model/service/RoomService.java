@@ -19,33 +19,40 @@ public class RoomService implements RoomRepository {
 
     @Override
     public Room findById(Integer id) {
-        return entityManager.find(Room.class, id);
+        return entityManager
+                .find(Room.class, id);
     }
 
     @Override
     public List<Room> getAll() {
-        return entityManager.createNamedQuery("Room.getAll", Room.class).getResultList();
+        return entityManager
+                .createNamedQuery("Room.getAll", Room.class)
+                .getResultList();
     }
 
     @Override
     public List<Room> getByName(String name) {
-        Query query = entityManager.createNamedQuery("Room.getByName", Room.class);
-        query.setParameter("prm_name", name.replace(" ", "%"));
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Room.getByName", Room.class)
+                .setParameter("prm_name", name.replace(" ", "%"))
+                .getResultList();
     }
 
     @Override
     public void save(Room data) {
-        entityManager.persist(data);
+        entityManager
+                .persist(data);
     }
 
     @Override
     public void update(Room data) {
-        entityManager.merge(data);
+        entityManager
+                .merge(data);
     }
 
     @Override
     public void delete(Room data) {
-        entityManager.remove(entityManager.contains(data) ? data: entityManager.merge(data));
+        entityManager
+                .remove(entityManager.contains(data) ? data: entityManager.merge(data));
     }
 }

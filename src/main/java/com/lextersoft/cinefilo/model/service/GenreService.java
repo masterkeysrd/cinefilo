@@ -20,22 +20,23 @@ public class GenreService implements GenreRepository {
 
     @Override
     public Genre findById(Integer id) {
-        TypedQuery<Genre> query = entityManager.createNamedQuery("Genre.getById", Genre.class);
-        query.setParameter("prm_id", id);
-        return query.getSingleResult();
+        return entityManager
+                .find(Genre.class, id);
     }
 
     @Override
     public List<Genre> getAll() {
-        Query query = entityManager.createNamedQuery("Genre.getAll", Genre.class);
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Genre.getAll", Genre.class)
+                .getResultList();
     }
 
     @Override
     public List<Genre> getByName(String name) {
-        Query query = entityManager.createNamedQuery("Genre.getByName", Genre.class);
-        query.setParameter("prm_name", name);
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Genre.getByName", Genre.class)
+                .setParameter("prm_name", name)
+                .getResultList();
     }
 
     @Override
@@ -50,6 +51,7 @@ public class GenreService implements GenreRepository {
 
     @Override
     public void delete(Genre data) {
-        entityManager.remove(entityManager.contains(data) ? data : entityManager.merge(data));
+        entityManager
+                .remove(entityManager.contains(data) ? data : entityManager.merge(data));
     }
 }

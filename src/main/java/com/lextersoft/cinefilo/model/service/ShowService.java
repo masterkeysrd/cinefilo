@@ -20,7 +20,8 @@ public class ShowService implements ShowRepository {
 
     @Override
     public Show findById(Integer id) {
-        return entityManager.find(Show.class, id);
+        return entityManager
+                .find(Show.class, id);
     }
 
     @Override
@@ -30,32 +31,44 @@ public class ShowService implements ShowRepository {
                 .getResultList();
     }
 
+    @Override
+    public List<Show> getByCinema(Integer cinema) {
+        return entityManager
+                .createNamedQuery("Show.getByCinema", Show.class)
+                .setParameter("prm_cinema", cinema)
+                .getResultList();
+    }
+
     public List<Show> getByMovie(Integer movie) {
-        Query query = entityManager.createNamedQuery("Show.getByMovie", Show.class);
-        query.setParameter("prm_movie", movie);
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Show.getByMovie", Show.class)
+                .setParameter("prm_movie", movie)
+                .getResultList();
     }
 
     public List<Show> getByRoom(Integer room) {
-        Query query = entityManager.createNamedQuery("Show.getByRoom", Show.class);
-        query.setParameter("prm_room", room);
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Show.getByRoom", Show.class)
+                .setParameter("prm_room", room)
+                .getResultList();
     }
 
     public List<Show> getByRoomAndMovie(Integer room, Integer movie) {
-        Query query = entityManager.createNamedQuery("Show.getByRoomAndMovie", Show.class);
-        query.setParameter("prm_room", room);
-        query.setParameter("prm_movie", movie);
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Show.getByRoomAndMovie", Show.class)
+                .setParameter("prm_room", room)
+                .setParameter("prm_movie", movie)
+                .getResultList();
     }
 
     @Override
     public List<Show> getByMovieAndCinema(Integer movie, Integer cinema, Date date) {
-        Query query = entityManager.createNamedQuery("Show.getByMovieAndCinema", Show.class);
-        query.setParameter("prm_movie", movie);
-        query.setParameter("prm_cinema", cinema);
-        query.setParameter("prm_date", date);
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Show.getByMovieAndCinema", Show.class)
+                .setParameter("prm_movie", movie)
+                .setParameter("prm_cinema", cinema)
+                .setParameter("prm_date", date)
+                .getResultList();
     }
 
     @Override
@@ -65,16 +78,19 @@ public class ShowService implements ShowRepository {
 
     @Override
     public void save(Show data) {
-        entityManager.persist(data);
+        entityManager
+                .persist(data);
     }
 
     @Override
     public void update(Show data) {
-        entityManager.merge(data);
+        entityManager
+                .merge(data);
     }
 
     @Override
     public void delete(Show data) {
-        entityManager.remove(entityManager.contains(data) ? data: entityManager.merge(data));
+        entityManager
+                .remove(entityManager.contains(data) ? data: entityManager.merge(data));
     }
 }

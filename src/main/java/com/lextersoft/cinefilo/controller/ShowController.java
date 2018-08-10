@@ -40,6 +40,9 @@ public class ShowController implements IBasicController<Show, Integer> {
         else if (movie != null && cinema != null && date != null) {
             return  showRepository.getByMovieAndCinema(movie, cinema, new SimpleDateFormat("dd-MM-yyyy").parse(date));
         }
+        else if (movie == null && cinema != null && date == null) {
+            return showRepository.getByCinema(cinema);
+        }
         return showRepository.getAll();
     }
 

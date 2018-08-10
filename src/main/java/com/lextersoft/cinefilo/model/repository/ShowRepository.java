@@ -10,4 +10,5 @@ public interface ShowRepository extends IRepository<Show, Integer> {
     List<Show> getByRoom(Integer room);
     List<Show> getByRoomAndMovie(Integer room, Integer movie);
     List<Show> getByMovieAndCinema(Integer movie , Integer cinema, Date date);
+    List<Show> getByCinema(Integer cinema);
 }

@@ -22,27 +22,31 @@ public class MovieService implements MovieRepository {
 
     @Override
     public Movie findById(Integer id) {
-        return entityManager.find(Movie.class, id);
+        return entityManager
+                .find(Movie.class, id);
     }
 
     @Override
     public List<Movie> getAll() {
-        Query query = entityManager.createNamedQuery("Movie.getAll", Movie.class);
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Movie.getAll", Movie.class)
+                .getResultList();
     }
 
     @Override
     public List<Movie> getByName(String name) {
-        Query query = entityManager.createNamedQuery("Movie.getByName", Movie.class);
-        query.setParameter("prm_name", name);
-        return  query.getResultList();
+        return entityManager
+                .createNamedQuery("Movie.getByName", Movie.class)
+                .setParameter("prm_name", name)
+                .getResultList();
     }
 
     @Override
     public List<Movie> getPremieres() {
-        Query query = entityManager.createNamedQuery("Movie.getPremieres", Movie.class);
-        query.setParameter("prm_date", DateUtils.addMonths(new Date(), -3));
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Movie.getPremieres", Movie.class)
+                .setParameter("prm_date", DateUtils.addWeeks(new Date(), -2))
+                .getResultList();
     }
 
     @Override
@@ -64,6 +68,7 @@ public class MovieService implements MovieRepository {
 
     @Override
     public void delete(Movie data) {
-        entityManager.remove(entityManager.contains(data) ? data: entityManager.merge(data));
+        entityManager
+                .remove(entityManager.contains(data) ? data: entityManager.merge(data));
     }
 }

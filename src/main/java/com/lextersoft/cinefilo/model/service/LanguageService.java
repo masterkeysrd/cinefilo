@@ -19,20 +19,23 @@ public class LanguageService implements LanguageRepository {
 
     @Override
     public Language findById(Integer id) {
-        return entityManager.find(Language.class, id);
+        return entityManager
+                .find(Language.class, id);
     }
 
     @Override
     public List<Language> getAll() {
-        Query query = entityManager.createNamedQuery("Language.getAll", Language.class);
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Language.getAll", Language.class)
+                .getResultList();
     }
 
     @Override
     public List<Language> getByName(String name) {
-        Query query = entityManager.createNamedQuery("Language.getByName", Language.class);
-        query.setParameter("prm_name", name);
-        return query.getResultList();
+        return entityManager
+                .createNamedQuery("Language.getByName", Language.class)
+                .setParameter("prm_name", name)
+                .getResultList();
     }
 
     @Override
@@ -47,6 +50,7 @@ public class LanguageService implements LanguageRepository {
 
     @Override
     public void delete(Language data) {
-        entityManager.remove(entityManager.contains(data) ? data: entityManager.merge(data));
+        entityManager
+                .remove(entityManager.contains(data) ? data: entityManager.merge(data));
     }
 }
