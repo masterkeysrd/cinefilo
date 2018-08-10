@@ -61,6 +61,9 @@ public class Movie implements Serializable {
     @Column(name = "NOMBRE_IMAGEN")
     private String imageName;
 
+    @Column(name = "URL_TRAILER")
+    private String trailerUrl;
+
     public Movie() {
     }
 
@@ -142,5 +145,13 @@ public class Movie implements Serializable {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public String getTrailerUrl() {
+        return trailerUrl;
+    }
+
+    public void setTrailerUrl(String trailerUrl) {
+        this.trailerUrl = trailerUrl;
     }
 }
