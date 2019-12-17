@@ -1,7 +1,8 @@
 package com.lextersoft.cinefilo.controller;
 
-import com.lextersoft.cinefilo.model.entity.Room;
-import com.lextersoft.cinefilo.model.repository.RoomRepository;
+import com.lextersoft.cinefilo.domain.Room;
+import com.lextersoft.cinefilo.repository.RoomRepository;
+import com.lextersoft.cinefilo.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,34 +12,37 @@ import java.util.List;
 @RequestMapping("/room")
 public class RoomController implements IBasicController<Room, Integer>{
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomService roomService;
+
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @GetMapping({"", "/"})
     public List<Room> index(@RequestParam(name = "search", required = false) String search) {
         if (search == null)
-            return roomRepository.getAll();
+            return roomService.getAll();
         else
-            return roomRepository.getByName(search);
+            return roomService.getByName(search);
     }
 
     @GetMapping("/{id}")
     public Room findById(@PathVariable(name = "id") Integer id) {
-        return roomRepository.findById(id);
+        return roomService.findById(id).get();
     }
 
     @PostMapping({"", "/"})
     public void save(@RequestBody Room data) {
-        roomRepository.save(data);
+        roomService.save(data);
     }
 
     @PutMapping({"", "/"})
     public void update(@RequestBody Room data) {
-        roomRepository.update(data);
+        roomService.update(data);
     }
 
     @DeleteMapping({"", "/"})
     public void delete(@RequestBody Room data) {
-        roomRepository.delete(data);
+        roomService.delete(data);
     }
 }
