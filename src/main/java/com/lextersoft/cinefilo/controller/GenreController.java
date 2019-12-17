@@ -1,8 +1,7 @@
 package com.lextersoft.cinefilo.controller;
 
-import com.lextersoft.cinefilo.model.entity.Genre;
-import com.lextersoft.cinefilo.model.repository.GenreRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.lextersoft.cinefilo.domain.Genre;
+import com.lextersoft.cinefilo.service.GenreService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,36 +10,39 @@ import java.util.List;
 @RequestMapping("/genre")
 public class GenreController implements IBasicController<Genre, Integer>{
 
+    private final GenreService genreService;
 
-    @Autowired
-    private GenreRepository genreRepository;
+    public GenreController(GenreService genreService) {
+        this.genreService = genreService;
+    }
+
 
     @GetMapping({"", "/"})
     public List<Genre> index(@RequestParam(name = "search", required = false) String search) {
        if (search == null)
-           return  genreRepository.getAll();
+           return  genreService.getAll();
        else
-           return genreRepository.getByName(search.replace(" ", "%"));
+           return genreService.getByName(search.replace(" ", "%"));
     }
 
 
     @GetMapping("/{id}")
     public Genre findById(@PathVariable Integer id) {
-        return genreRepository.findById(id);
+        return genreService.findById(id).get();
     }
 
     @PostMapping({"", "/"})
     public void save(@RequestBody Genre data) {
-        genreRepository.save(data);
+        genreService.save(data);
     }
 
     @PutMapping("/")
     public void update(@RequestBody Genre data) {
-        genreRepository.update(data);
+        genreService.update(data);
     }
 
     @DeleteMapping("/")
     public void delete(@RequestBody Genre data){
-        genreRepository.delete(data);
+        genreService.delete(data);
     }
 }

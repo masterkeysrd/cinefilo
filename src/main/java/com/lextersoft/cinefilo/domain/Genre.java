@@ -1,19 +1,9 @@
-package com.lextersoft.cinefilo.model.entity;
+package com.lextersoft.cinefilo.domain;
 
 import javax.persistence.*;
 
 @Entity(name = "Genre")
 @Table(name = "GENEROS")
-@NamedQueries(
-        {
-                @NamedQuery(name = "Genre.getById",
-                        query = "select t from Genre t where t.id = :prm_id"),
-                @NamedQuery(name = "Genre.getAll",
-                        query = "select t from Genre t"),
-                @NamedQuery(name = "Genre.getByName",
-                        query = "select t from Genre t where t.name like concat('%', :prm_name, '%')")
-        }
-)
 public class Genre {
 
     @Id
