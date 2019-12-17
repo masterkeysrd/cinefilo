@@ -1,4 +1,4 @@
-package com.lextersoft.cinefilo.model.entity;
+package com.lextersoft.cinefilo.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
